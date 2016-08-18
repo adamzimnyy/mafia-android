@@ -1,6 +1,7 @@
 package mafia.adamzimny.mafia.util;
 
 import org.joda.time.DateTime;
+import org.joda.time.Seconds;
 import org.joda.time.Years;
 
 import java.util.Date;
@@ -50,5 +51,12 @@ public class DateUtils {
         //TODO Fetch game parameters from API.
         DateTime endTime = new DateTime(date).plusDays(7);
         return formatAsYMDHMS(endTime.toDate().getTime());
+    }
+
+    public static int timeLeftOnTargetFromCreatedDateAsSeconds(Date date){
+        //TODO Fetch game parameters from API.
+        DateTime endTime = new DateTime(date).plusDays(7);
+        DateTime now = DateTime.now();
+        return Math.abs(Seconds.secondsBetween(endTime,now).getSeconds());
     }
 }

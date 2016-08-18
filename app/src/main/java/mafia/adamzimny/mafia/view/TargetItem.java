@@ -1,6 +1,7 @@
 package mafia.adamzimny.mafia.view;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,7 +12,7 @@ import butterknife.ButterKnife;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import mafia.adamzimny.mafia.R;
-import mafia.adamzimny.mafia.api.ImgurAPI;
+import mafia.adamzimny.mafia.util.ImgurLinker;
 import mafia.adamzimny.mafia.constant.Targets;
 import mafia.adamzimny.mafia.model.Target;
 import mafia.adamzimny.mafia.util.DateUtils;
@@ -24,6 +25,7 @@ public class TargetItem extends AbstractItem<TargetItem, TargetItem.ViewHolder> 
     Target target;
     Context context;
     //The unique ID for this type of item
+    CountDownTimer timer;
 
     public TargetItem withTarget(Target target) {
         this.target = target;
@@ -46,34 +48,53 @@ public class TargetItem extends AbstractItem<TargetItem, TargetItem.ViewHolder> 
         return R.layout.list_element;
     }
 
+    public Target getTarget() {
+        return target;
+    }
+public void stopTimer(){
+    if(timer != null)
+    timer.cancel();
+}
     //The logic to bind your data to the view
     @Override
-    public void bindView(ViewHolder viewHolder) {
+    public void bindView(final ViewHolder viewHolder) {
         //call super so the selection is already handled for you
         super.bindView(viewHolder);
 
-        //bind our data
-        //set the text for the name
         viewHolder.name.setText(target.getHunted().getFirstName() + " " +
                 target.getHunted().getLastName() + ", " +
                 DateUtils.getAgeFromBirthDate(target.getHunted().getDateOfBirth()));
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(ImgurAPI.compileUrl(target.getHunted().getProfilePicture()), viewHolder.profileImage);
+        imageLoader.displayImage(ImgurLinker.compileUrl(target.getHunted().getProfilePicture()), viewHolder.profileImage);
         viewHolder.distance.setText(String.valueOf(
                 LocationUtils.distance(
                         target.getHunted().getAverageLocation(),
                         target.getHunter().getAverageLocation())));
         if (target.getStatus().equals(Targets.ACTIVE)) {
-            viewHolder.timeLeft.setText(DateUtils.timeLeftOnTargetFromCreatedDate(target.getCreated()));
+            timer = new CountDownTimer(DateUtils.timeLeftOnTargetFromCreatedDateAsSeconds(target.getCreated()), 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    viewHolder.timeLeft.setText(DateUtils.timeLeftOnTargetFromCreatedDate(target.getCreated()));
+               }
+
+                public void onFinish() {
+
+                }
+
+            };
+            timer.start();
+            //    viewHolder.timeLeft.setText(DateUtils.timeLeftOnTargetFromCreatedDate(target.getCreated()));
             viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_yellow));
-        } else if (target.getStatus().equals(Targets.ACTIVE)){
+        } else if (target.getStatus().equals(Targets.FAILED)) {
             viewHolder.timeLeft.setText(Targets.FAILED);
             viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_red));
 
-        }else if (target.getStatus().equals(Targets.COMPLETED)){
+        } else if (target.getStatus().equals(Targets.COMPLETED)) {
             viewHolder.timeLeft.setText(Targets.COMPLETED);
             viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_green));
         }
+
+
     }
 
     //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
@@ -96,7 +117,8 @@ public class TargetItem extends AbstractItem<TargetItem, TargetItem.ViewHolder> 
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(view);
+            ButterKnife.bind(this, view);
+
         }
     }
 }

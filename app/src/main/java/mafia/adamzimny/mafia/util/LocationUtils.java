@@ -10,7 +10,7 @@ import mafia.adamzimny.mafia.model.Location;
 public class LocationUtils {
 
     public static float distance(Location a, Location b) {
-
+        if (a == null || b == null) return 10;
         android.location.Location locationA = new android.location.Location("");
 
         locationA.setLatitude(a.getLatitude());
@@ -21,6 +21,6 @@ public class LocationUtils {
         locationB.setLatitude(b.getLatitude());
         locationB.setLongitude(b.getLongitute());
 
-       return locationA.distanceTo(locationB);
+        return locationA.distanceTo(locationB);
     }
 }

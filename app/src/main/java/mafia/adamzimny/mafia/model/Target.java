@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Adam on 2016-07-15.
  */
 
-public class Target {
+public class Target implements Comparable {
 
     Integer id;
     User hunter;
@@ -80,5 +80,11 @@ public class Target {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.getCreated().compareTo(((Target) o).getCreated());
+
     }
 }

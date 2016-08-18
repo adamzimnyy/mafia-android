@@ -52,7 +52,7 @@
         </LinearLayout>
     </LinearLayout>
     <View android:id="@+id/status_view"
-          android:layout_width="16dp"
+          android:layout_width="8dp"
           android:layout_height="match_parent"
           android:background="@color/target_green"/>
 </LinearLayout>
