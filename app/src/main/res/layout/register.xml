@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+
+                  style="@style/TabText">
+
+        <android.support.v7.widget.AppCompatImageButton
+                android:layout_width="240dp"
+                android:layout_gravity="center"
+                android:layout_height="240dp"
+                android:layout_marginTop="30dp"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="First name"
+                android:textColor="@color/white"
+                android:ems="10" android:layout_marginRight="16dp"
+                android:id="@+id/editText3" android:layout_marginLeft="@dimen/button_width_margin"
+                android:layout_gravity="bottom"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Last name"
+                android:textColor="@color/white" android:layout_marginRight="16dp"
+                android:ems="10"
+                android:layout_marginLeft="@dimen/button_width_margin"
+                android:id="@+id/editText4"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email" android:layout_marginLeft="@dimen/button_width_margin"
+                android:textColor="@color/white" android:layout_marginRight="16dp"
+                android:ems="10"
+                android:id="@+id/editText5"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:hint="Username"
+                android:id="@+id/editText6" android:layout_marginRight="16dp"
+                android:layout_marginLeft="@dimen/button_width_margin"
+        />
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_marginRight="16dp">
+            <EditText
+                    android:layout_marginLeft="@dimen/button_width_margin"
+                    android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:saveEnabled="true" android:hint="Password"
+                    android:textColor="@color/white"
+                    android:id="@+id/editText7"
+                    android:layout_gravity="center_horizontal"/>
+            <ImageButton
+                    android:layout_width="40dp"
+                    android:id="@+id/peek_button"
+                    android:background="@color/transparent"
+                    android:padding="8dp" android:layout_height="36dp"
+                    android:src="@drawable/eye"
+                    android:scaleType="centerCrop"/>
+
+        </LinearLayout>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date" android:layout_marginRight="16dp"
+                android:ems="10" android:layout_marginLeft="@dimen/button_width_margin"
+                android:hint="Date of birth"
+                android:id="@+id/editText8"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginRight="16dp"
+                android:inputType="textMultiLine"
+                android:ems="10" android:hint="More "
+                android:id="@+id/editText9" android:layout_marginLeft="@dimen/button_width_margin"
+        />
+        <LinearLayout android:layout_marginTop="36dp"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent" android:layout_marginRight="16dp"
+                      android:layout_gravity="center">
+            <CheckBox android:layout_marginLeft="@dimen/button_width_margin"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="I accept the "
+                      android:textColor="@color/white"
+                      android:id="@+id/checkBox"
+                      android:layout_gravity="center_horizontal"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_gravity="center"
+                      android:textSize="18sp"
+
+                      android:layout_height="wrap_content"
+                      android:text="Rules"
+                      android:textColor="@color/placeholder_text"/>
+        </LinearLayout>
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:id="@+id/button"
+                android:layout_marginLeft="@dimen/button_width_margin"
+                android:layout_marginRight="@dimen/button_width_margin"
+                android:background="@color/gray_button" android:layout_marginBottom="48dp"/>
+
+
+    </LinearLayout>
+</ScrollView>

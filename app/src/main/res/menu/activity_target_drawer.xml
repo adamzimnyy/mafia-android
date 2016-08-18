@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_targets"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Targets" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_code"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Generate code" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Settings" />
+    </group>
+
+    <item android:title="Developer">
+        <menu>
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Send feedback" />
+            <item
+                    android:id="@+id/nav_bug"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="Report a bug" />
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Rate" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@android:drawable/ic_dialog_info"
+                android:title="About" />
+        </menu>
+    </item>
+
+</menu>
