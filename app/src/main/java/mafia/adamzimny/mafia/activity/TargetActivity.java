@@ -1,7 +1,12 @@
 package mafia.adamzimny.mafia.activity;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +20,11 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mafia.adamzimny.mafia.R;
+import mafia.adamzimny.mafia.util.AppVariable;
+import mafia.adamzimny.mafia.util.helper.ImageLoaderHelper;
+import mafia.adamzimny.mafia.util.helper.IntentHelper;
 import mafia.adamzimny.mafia.view.adapter.TargetPageAdapter;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class TargetActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,12 +46,17 @@ public class TargetActivity extends AppCompatActivity
     TabLayout tabs;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.global);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        setTitle( R.string.targets);
+        setTitle(R.string.targets);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -51,6 +65,8 @@ public class TargetActivity extends AppCompatActivity
                 TargetActivity.this));
         tabs.setupWithViewPager(viewPager);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ImageLoaderHelper.initialize(this);
     }
 
     @Override
@@ -60,10 +76,16 @@ public class TargetActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            AppVariable.loginLocationSaved = false;
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                   return;
+            }
+            AppVariable.locationManager.removeUpdates(AppVariable.locationListener);
         }
     }
 
@@ -100,7 +122,7 @@ public class TargetActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
 
         }else if (id == R.id.nav_code) {
-
+            IntentHelper.startActivityIntent(this,CodeActivity.class);
         }else if (id == R.id.nav_settings) {
 
         }else if (id == R.id.nav_feedback) {

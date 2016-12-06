@@ -12,7 +12,7 @@ import mafia.adamzimny.mafia.fragment.TargetsPageFragment;
 public class TargetPageAdapter extends FragmentPagerAdapter {
 
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "Private", "Public"};
+    private String tabTitles[] = new String[]{"Private", "Public"};
     private Context context;
 
     public TargetPageAdapter(FragmentManager fm, Context context) {
@@ -27,9 +27,8 @@ public class TargetPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return TargetsPageFragment.newInstance(position + 1);
+        return TargetsPageFragment.newInstance(position, position != 0);
     }
-
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position

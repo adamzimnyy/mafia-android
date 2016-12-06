@@ -1,13 +1,14 @@
 package mafia.adamzimny.mafia.model;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Adam on 2016-07-15.
  */
 
-public class Target implements Comparable {
+public class Target implements Comparable, Serializable {
 
     Integer id;
     User hunter;
@@ -15,6 +16,7 @@ public class Target implements Comparable {
     String status;
     Date created;
     Date completed;
+
     boolean publicTarget = false;
     Location location;
 

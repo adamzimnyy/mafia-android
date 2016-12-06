@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,11 +13,11 @@ import butterknife.ButterKnife;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import mafia.adamzimny.mafia.R;
-import mafia.adamzimny.mafia.util.ImgurLinker;
+import mafia.adamzimny.mafia.util.helper.ImgurHelper;
 import mafia.adamzimny.mafia.constant.Targets;
 import mafia.adamzimny.mafia.model.Target;
 import mafia.adamzimny.mafia.util.DateUtils;
-import mafia.adamzimny.mafia.util.LocationUtils;
+import mafia.adamzimny.mafia.util.helper.LocationHelper;
 
 /**
  * Created by adamz on 18.08.2016.
@@ -51,10 +52,13 @@ public class TargetItem extends AbstractItem<TargetItem, TargetItem.ViewHolder> 
     public Target getTarget() {
         return target;
     }
-public void stopTimer(){
-    if(timer != null)
-    timer.cancel();
-}
+
+    public void stopTimer() {
+        Log.d("timer","stopTimer");
+        if (timer != null)
+            timer.cancel();
+    }
+
     //The logic to bind your data to the view
     @Override
     public void bindView(final ViewHolder viewHolder) {
@@ -65,36 +69,36 @@ public void stopTimer(){
                 target.getHunted().getLastName() + ", " +
                 DateUtils.getAgeFromBirthDate(target.getHunted().getDateOfBirth()));
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(ImgurLinker.compileUrl(target.getHunted().getProfilePicture()), viewHolder.profileImage);
-        viewHolder.distance.setText(String.valueOf(
-                LocationUtils.distance(
-                        target.getHunted().getAverageLocation(),
-                        target.getHunter().getAverageLocation())));
-        if (target.getStatus().equals(Targets.ACTIVE)) {
-            timer = new CountDownTimer(DateUtils.timeLeftOnTargetFromCreatedDateAsSeconds(target.getCreated()), 1000) {
+        imageLoader.displayImage(ImgurHelper.compileUrl(target.getHunted().getProfilePicture()), viewHolder.profileImage);
+        viewHolder.distance.setText(String.valueOf(LocationHelper.distance(target)));
+        switch (target.getStatus()) {
+            case Targets.ACTIVE:
+                timer = new CountDownTimer(DateUtils.timeLeftOnTargetFromCreatedDateAsSeconds(target.getCreated()), 1000) {
 
-                public void onTick(long millisUntilFinished) {
-                    viewHolder.timeLeft.setText(DateUtils.timeLeftOnTargetFromCreatedDate(target.getCreated()));
-               }
+                    public void onTick(long millisUntilFinished) {
+                        viewHolder.timeLeft.setText(DateUtils.timeLeftOnTargetFromCreatedDate(target.getCreated()));
+                     }
 
-                public void onFinish() {
-
-                }
-
-            };
-            timer.start();
-            //    viewHolder.timeLeft.setText(DateUtils.timeLeftOnTargetFromCreatedDate(target.getCreated()));
-            viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_yellow));
-        } else if (target.getStatus().equals(Targets.FAILED)) {
-            viewHolder.timeLeft.setText(Targets.FAILED);
-            viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_red));
-
-        } else if (target.getStatus().equals(Targets.COMPLETED)) {
-            viewHolder.timeLeft.setText(Targets.COMPLETED);
-            viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_green));
+                    @Override
+                    public void onFinish() {
+                    }
+                };
+                timer.start();
+                viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_yellow));
+                break;
+            case Targets.FAILED:
+                Log.d("target", "viewholder status failed");
+                viewHolder.timeLeft.setText(Targets.FAILED);
+                viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_red));
+                if (timer != null) timer.cancel();
+                break;
+            case Targets.COMPLETED:
+                Log.d("target", "viewholder status completed");
+                viewHolder.timeLeft.setText(Targets.COMPLETED);
+                viewHolder.statusBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.target_green));
+                if (timer != null) timer.cancel();
+                break;
         }
-
-
     }
 
     //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
@@ -118,7 +122,6 @@ public void stopTimer(){
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
         }
     }
 }

@@ -17,4 +17,10 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="auth_endpoint">/auth/</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_delete_me">Map</string>
+    <string name="title_activity_map">Map</string>
+    <string name="button_code_send">SEND</string>
+
 </resources>

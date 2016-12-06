@@ -10,16 +10,20 @@
         <item name="android:textColorSecondary">#6B6B6B</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textColorHint">#6B6B6B</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
+        <item name="fontPath">fonts/ProductSans.ttf</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.NoActionBar"
+           parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="TabText" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>

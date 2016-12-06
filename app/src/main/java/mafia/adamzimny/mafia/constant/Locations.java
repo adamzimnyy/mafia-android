@@ -9,4 +9,5 @@ public class Locations {
     public static final String KILL = "KILL";
     public static final String LOGIN = "LOGIN";
     public static final String HOME = "HOME";
+    public static final String CODE = "CODE";
 }

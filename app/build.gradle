@@ -23,21 +23,13 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
 
     //butterknife for view injection
-    compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
 
     //circular image view for no GPS screen
-    compile 'com.mikhaellopez:circularimageview:3.0.2'
-
 
     //Retrofit for injecting API endpoints
-    compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     //RecyclerView adapter
     compile('com.mikepenz:fastadapter:1.6.1@aar') {
@@ -45,8 +37,48 @@ dependencies {
     }
 
     //JodaTime
-    compile 'net.danlew:android.joda:2.9.4.1'
 
     //Async image loading
+
+    //Custom font
+
+//Image cropper for profile image
+
+    // Animated progress button
+
+    //OkHttp logging utility
+
+    //Progress bar for register photo upload
+
+    //For detecting memory leaks
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'net.danlew:android.joda:2.9.4.1'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.3.0'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+    compile 'com.daimajia.numberprogressbar:library:1.2@aar'
+    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.0'
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
+    compile 'com.github.zellius:rxlocationmanager:0.1.1'
+    compile 'com.google.maps.android:android-maps-utils:0.4+'
+    // Circular progress bar for code timer
+    compile 'com.mikhaellopez:circularprogressbar:1.1.1'
+
+    // Circular button with progress for code refreshing
+    compile 'com.github.melihaksoy:HoldToLoadLayout:1.0.2'
+
+    //Google play services for face detection api
+    compile 'com.google.android.gms:play-services:7.8+'
 }

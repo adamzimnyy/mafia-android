@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:background="@color/gray_background">
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="28dp"
+              android:text="Pick profile picture"/>
+    <ImageView android:id="@+id/image_view"
+               android:layout_width="256dp"
+               android:scaleType="centerCrop"
+               android:layout_height="256dp"
+               android:src="@drawable/adam"/>
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gallery_button"
+            android:text="Pick photo" android:background="@color/gray_button"/>
+</LinearLayout>

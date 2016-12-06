@@ -1,16 +1,43 @@
 package mafia.adamzimny.mafia.model;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Adam on 2016-07-15.
  */
 
-public class User {
+public class User implements Serializable {
 
     private Long id;
     String firstName;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
+                ", accountStatus='" + accountStatus + '\'' +
+                ", registerDate=" + registerDate +
+                ", lastActive=" + lastActive +
+                ", loginstreak=" + loginstreak +
+                ", noTargetSince=" + noTargetSince +
+                ", score=" + score +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", targetDistance=" + targetDistance +
+                ", notifications='" + notifications + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", description='" + description + '\'' +
+                ", authorities='" + authorities + '\'' +
+                '}';
+    }
+
     String lastName;
 
     String profilePicture;
@@ -30,14 +57,24 @@ public class User {
     Date dateOfBirth;
     String description;
     String authorities;
-Location averageLocation;
 
-    public Location getAverageLocation() {
-        return averageLocation;
+    double latitude;
+    double longitude;
+
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setAverageLocation(Location averageLocation) {
-        this.averageLocation = averageLocation;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public Long getId() {

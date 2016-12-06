@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -10,6 +10,17 @@
               android:focusableInTouchMode="true">
 
 
+    <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:elevation="0dp"
+            android:theme="@style/AppTheme.AppBarOverlay" android:background="@color/gray_background">
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/gray_toolbar"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
     <ScrollView
 
             android:layout_width="match_parent"
@@ -25,7 +36,7 @@
             <ImageView android:layout_width="160dp"
                        android:layout_height="160dp"
                        android:layout_gravity="center"
-                       android:layout_marginTop="@dimen/button_width_margin"
+                       android:layout_marginTop="80dp"
                        android:layout_marginBottom="20dp"
                        android:src="@drawable/detective"
                        android:tint="@color/white"/>
@@ -42,7 +53,7 @@
             <LinearLayout
                     android:id="@+id/login_form"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
@@ -57,7 +68,7 @@
                             android:layout_marginLeft="@dimen/button_width_margin"
                             android:layout_marginRight="@dimen/button_width_margin"
                             android:hint="Username"
-                            android:text="string"
+                            android:text="a"
                             android:textColorHint="@color/placeholder_text"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -68,7 +79,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
                             android:ems="10"
-                            android:text="string"
+                            android:text="a"
                             android:id="@+id/password_field"
                             android:textColor="@color/white"
                             android:layout_gravity="center_horizontal"
@@ -79,14 +90,14 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <Button android:layout_width="match_parent"
-                        android:layout_height="36dp"
+                        android:layout_height="42dp"
                         android:layout_marginLeft="@dimen/button_width_margin"
                         android:text="Login"
                         android:id="@+id/button_login"
                         android:layout_marginRight="@dimen/button_width_margin"
                         android:background="@color/gray_button"
                         android:layout_gravity="center"
-                        android:textAllCaps="false"/>
+                        android:textAllCaps="false" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
                 <CheckBox android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_marginLeft="@dimen/button_width_margin"
@@ -94,16 +105,8 @@
                           android:id="@+id/checkbox_remember_me"
                           android:textColor="@color/white" android:textSize="16sp"/>
 
-                <Button android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:id="@+id/button_register"
-                        android:layout_marginLeft="@dimen/button_width_margin"
-                        android:text="Register"
-                        android:layout_marginRight="@dimen/button_width_margin"
-                        android:background="@color/gray_button"
-                        android:layout_marginTop="52dp"
-                        android:textAllCaps="false"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    </android.support.design.widget.AppBarLayout>
 </LinearLayout>

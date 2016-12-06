@@ -3,16 +3,16 @@ package mafia.adamzimny.mafia.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.*;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -20,33 +20,27 @@ import android.widget.*;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import mafia.adamzimny.mafia.util.AppVariable;
 import mafia.adamzimny.mafia.R;
 import mafia.adamzimny.mafia.api.RetrofitBuilder;
 import mafia.adamzimny.mafia.api.service.AuthService;
 import mafia.adamzimny.mafia.model.json.AuthenticationRequest;
 import mafia.adamzimny.mafia.model.json.AuthenticationResponse;
+import mafia.adamzimny.mafia.util.helper.IntentHelper;
 import net.danlew.android.joda.JodaTimeAndroid;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.io.IOException;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity/* implements LoaderCallbacks<Cursor>*/ {
+public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_READ_CONTACTS = 0;
 
- //   private UserLoginTask mAuthTask = null;
+    //   private UserLoginTask mAuthTask = null;
 
     // UI references.
 
@@ -65,31 +59,23 @@ public class LoginActivity extends AppCompatActivity/* implements LoaderCallback
     @BindView(R.id.button_login)
     Button loginButton;
 
+    @BindView(R.id.toolbar)
+    android.support.v7.widget.Toolbar toolbar;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
         JodaTimeAndroid.init(this);
         ButterKnife.bind(this);
-        // Set up the login form.
-        //    populateAutoComplete();
 
-        // UNIVERSAL IMAGE LOADER SETUP
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
-                .cacheOnDisk(true)
-                .cacheInMemory(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300))
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-                .defaultDisplayImageOptions(defaultOptions)
-                .memoryCache(new WeakMemoryCache())
-                .diskCacheSize(100 * 1024 * 1024)
-                .build();
-
-         ImageLoader.getInstance().init(config);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         passwordField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -109,8 +95,16 @@ public class LoginActivity extends AppCompatActivity/* implements LoaderCallback
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign in or startRegister the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
@@ -152,10 +146,10 @@ public class LoginActivity extends AppCompatActivity/* implements LoaderCallback
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-         //   mAuthTask = new UserLoginTask(email, password);
-         //   mAuthTask.execute((Void) null);
+            //   mAuthTask = new UserLoginTask(email, password);
+            //   mAuthTask.execute((Void) null);
             Log.d("LoginActivity", "doInBackground");
-            final AuthService authService = (AuthService) RetrofitBuilder.getService(AuthService.class);
+            final AuthService authService = (AuthService) RetrofitBuilder.getService(AuthService.class, RetrofitBuilder.BASE_URL);
             Call<AuthenticationResponse> authCall;
 
             authCall = authService.authenticate(new AuthenticationRequest(username, password));
@@ -168,10 +162,9 @@ public class LoginActivity extends AppCompatActivity/* implements LoaderCallback
                         AppVariable.token = response.body().getToken();
                         AppVariable.loggedUser = response.body().getUser();
                         Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_LONG).show();
-
-                        Intent i = new Intent(LoginActivity.this,TargetActivity.class);
-                        LoginActivity.this.startActivity(i);
+                        IntentHelper.startActivityIntent(LoginActivity.this, GpsActivity.class);
                         finish();
+                        // }
                     } else {
                         AppVariable.token = "";
                         AppVariable.loggedUser = null;
@@ -229,82 +222,6 @@ public class LoginActivity extends AppCompatActivity/* implements LoaderCallback
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-/*
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String username;
-        private final String mPassword;
-        Call<AuthenticationResponse> authCall;
-
-        UserLoginTask(String username, String password) {
-            this.username = username;
-            mPassword = password;
-            Log.d("LoginActivity", "login task created");
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            Log.d("LoginActivity", "doInBackground");
-            final AuthService authService = (AuthService) RetrofitBuilder.getService(AuthService.class);
-            final boolean[] success = new boolean[1];
-            authCall = authService.authenticate(new AuthenticationRequest(username, mPassword));
-            authCall.enqueue(new Callback<AuthenticationResponse>() {
-                @Override
-                public void onResponse(Call<AuthenticationResponse> call, Response<AuthenticationResponse> response) {
-                    Log.d("LoginActivity", "onResponse login");
-                    if (response.code() == 200) {
-                        Log.d("LoginActivity", "onResponse login 200");
-                        AppVariable.token = response.body().getToken();
-                        AppVariable.loggedUser = response.body().getUser();
-                        success[0] = true;
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<AuthenticationResponse> call, Throwable t) {
-                    Log.d("LoginActivity", "onFailure login " + t);
-                    AppVariable.token = "";
-                    success[0] = false;
-                }
-            });
-            Log.d("LoginActivity", "return success = " + success[0]);
-            return success[0];
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-
-
-            Log.d("LoginActivity", "onPostExecute");
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                Log.d("LoginActivity", "onPostExecute success");
-                Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_LONG).show();
-
-                //TODO Launch GPS activity
-            } else {
-                Log.d("LoginActivity", "onPostExecute fail");
-                passwordField.setError(getString(R.string.error_incorrect_password));
-                passwordField.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
-
-    public class LoginLocationTask extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            return null;
-        }
-    }*/
 }
 

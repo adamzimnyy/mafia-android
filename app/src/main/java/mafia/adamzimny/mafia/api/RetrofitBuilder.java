@@ -1,6 +1,10 @@
 package mafia.adamzimny.mafia.api;
 
+import android.provider.ContactsContract;
 import com.google.gson.*;
+import mafia.adamzimny.mafia.api.service.ImgurService;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -10,30 +14,28 @@ import java.util.Date;
 public class RetrofitBuilder {
     private static boolean useLocalhost = false;
     public static final String BASE_URL = "http://mafia-test-env-java.eu-central-1.elasticbeanstalk.com/";
+    public static final String IMGUR_URL = "https://api.imgur.com/";
+    public static final String LOCALHOST = "http://192.168.0.103:8080";
 
-    public static final String LOCALHOST = "localhost:8080/";
-
-    public static Retrofit  build() {
+    public static Retrofit build(String url) {
         GsonBuilder builder = new GsonBuilder();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-// Register an adapter to manage the date types as long values
-        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                return new Date(json.getAsJsonPrimitive().getAsLong());
-            }
-        });
-
-        Gson gson = builder.create();
-
-
-
+        Gson gson = builder.setDateFormat("yyyy-MM-dd HH:mm:ss Z").
+        create();
         return new Retrofit.Builder()
-                .baseUrl(useLocalhost ? LOCALHOST : BASE_URL)
+                .client(client)
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 
-    public static Object getService(Class<?> clas){
-        return build().create(clas);
+    public static Object getService(Class<?> clas, String url) {
+        if(clas == ImgurService.class)
+            return build(url).create(clas);
+        return build(useLocalhost ? LOCALHOST : url).create(clas);
     }
+
 }

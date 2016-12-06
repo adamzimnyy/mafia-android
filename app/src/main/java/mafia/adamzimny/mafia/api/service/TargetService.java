@@ -1,10 +1,9 @@
 package mafia.adamzimny.mafia.api.service;
 
 import mafia.adamzimny.mafia.model.Target;
+import mafia.adamzimny.mafia.model.json.TargetConfirmation;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 import java.util.List;
 
@@ -13,6 +12,12 @@ import java.util.List;
  */
 public interface TargetService {
 
-    @GET("api/target/{id}")
-    Call<List<Target>> getTargetsForUser(@Path("id") long id, @Header("X-Auth-Token") String token);
+    @GET("api/target")
+    Call<List<Target>> getTargetsForUser(@Query("user") long id, @Header("X-Auth-Token") String token);
+
+    @PATCH("api/target/confirm")
+    Call<Target> confirm(@Query("target")Integer target, @Query("code") String code, @Header("X-Auth-Token") String token);
+
+    @GET("api/target")
+    Call<Target> getTargetById(@Query("id") long id, @Header("X-Auth-Token") String token);
 }

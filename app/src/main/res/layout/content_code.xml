@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_background">
+    <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/button_width_margin"
+            android:paddingTop="@dimen/button_width_margin"
+            android:paddingRight="@dimen/button_width_margin">
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cpb_progressbar_color="@color/blue_accent"
+                app:cpb_progressbar_width="3dp"
+                app:cpb_background_progressbar_width="2dp"
+                app:cpb_background_progressbar_color="@color/white"
+                app:cpb_progress="45" android:id="@+id/progress_bar"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:textSize="64sp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content" android:text="3m 45s" android:id="@+id/time"/>
+    </FrameLayout>
+    <EditText android:layout_marginTop="16dp"
+              android:textSize="32sp"
+              android:textColorHint="@color/placeholder_text"
+              android:hint="Code"
+              android:textColor="@color/white"
+              android:text="HBX5KC7"
+              android:textAllCaps="false"
+              android:gravity="center_horizontal"
+              android:layout_width="match_parent"
+              android:focusableInTouchMode="false"
+              android:focusable="false"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/button_width_margin"
+              android:layout_marginRight="@dimen/button_width_margin" android:layout_marginBottom="12dp"
+              android:id="@+id/code"/>
+
+    <com.melih.holdtoload.HoldToLoadLayout
+            android:id="@+id/hold" android:elevation="2dp"
+            android:layout_width="96dp" android:layout_gravity="center"
+            app:hold_strokeColor="@color/blue_accent"
+            app:hold_strokeWidth="10dp"
+            app:hold_duration="2000"
+            android:layout_height="96dp" android:padding="12dp">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:padding="16dp" android:layout_margin="12dp"
+                android:background="@drawable/circle_gray_item"
+                android:src="@drawable/dice" />
+    </com.melih.holdtoload.HoldToLoadLayout>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Hold to refresh"
+              android:layout_gravity="center"
+              android:textSize="16sp"
+              android:textColor="@color/placeholder_text"/>
+</LinearLayout>

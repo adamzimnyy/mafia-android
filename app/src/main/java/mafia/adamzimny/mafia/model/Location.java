@@ -1,19 +1,36 @@
 package mafia.adamzimny.mafia.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Adam on 2016-07-15.
  */
 
-public class Location {
+public class Location implements Serializable{
 
     Integer id;
-    long latitude;
-    long longitute;
+    double latitude;
+    double longitude;
     String type;
     Date date;
     User user;
+
+    public Location() {
+    }
+
+    public Location(double latitude, double longitute) {
+        this.latitude = latitude;
+        this.longitude = longitute;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Integer getId() {
         return id;
@@ -23,20 +40,20 @@ public class Location {
         this.id = id;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public long getLongitute() {
-        return longitute;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setLongitute(long longitute) {
-        this.longitute = longitute;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getType() {
@@ -45,14 +62,6 @@ public class Location {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public User getUser() {
